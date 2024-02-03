@@ -15,7 +15,7 @@ const routes = [
       {
         path: "courses",
         name: "view-courses",
-        component: () => import("@/modules/cruds/pets/components/Table.vue")
+        component: () => import("@/modules/cruds/courses/components/Table.vue")
       }
       /* {
         path: "courses/view/create",
