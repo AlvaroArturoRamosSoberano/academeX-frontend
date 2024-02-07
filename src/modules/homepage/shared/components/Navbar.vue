@@ -18,6 +18,11 @@
                     <li class="h-20 flex items-center hover:bg-cod-300 rounded-xl md:p-8">
                         <a class="w-full text align-middle" href="">Contactanos</a>
                     </li>
+                    <li class="h-20 flex items-center hover:bg-cod-300 rounded-xl md:p-8">
+                        <router-link :to="{ name: 'view-login' }">
+                            <a class="w-full text align-middle" href="">Iniciar sesión</a>
+                        </router-link>
+                    </li>
                 </ul>
             </div>
         </div>
