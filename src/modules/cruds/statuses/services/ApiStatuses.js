@@ -21,7 +21,7 @@ export const sendData = (formData, token) => {
   });
 };
 
-export const updateStatusesData = (id, formData, token) => {
+export const updateData = (id, formData, token) => {
   return axios.postForm(`${apiUrl}/statuses/${id}?_method=PUT`, formData, {
     headers: {
       Authorization: `Bearer ${token}` // Incluye el token en las cabeceras como Authorization

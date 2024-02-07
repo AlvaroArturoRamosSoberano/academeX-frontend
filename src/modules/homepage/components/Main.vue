@@ -10,7 +10,9 @@
                 </p>
                 <div class="p-8 md:pl-16">
                     <button class="h-10 w-28 bg-caribbean-400 rounded-2xl">
-                        <a href="">Registrarse</a>
+                        <router-link :to="{ name: 'view-register' }">
+                            <a>Registrarse</a>
+                        </router-link>
                     </button>
                 </div>
             </div>

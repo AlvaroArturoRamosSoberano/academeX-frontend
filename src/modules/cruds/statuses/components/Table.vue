@@ -1,12 +1,13 @@
 <template>
     <section class="h-auto bg-white flex justify-center items-center">
         <div class="w-screen">
-            <div v-loading="loading" element-loading-text="Cargando datos..."
+            <div v-loading="loading" :element-loading-text="loadingMessage"
                 class="card h-screen flex flex-col justify-center items-center pt-10">
                 <div class="card-bg w-80 lg:w-1/2 h-auto bg-white p-4 rounded-xl shadow-xl">
                     <div class="card-header bg-water-300 border border-gray-500 flex justify-between items-center p-2">
                         <h1 class="font-bold text-lg ps-2">Listado de Estados</h1>
-                        <Modal-Form title="Agregar" type="success" :icon="icons.Plus" @done="getStatuses"></Modal-Form>
+                        <Modal-Form title="Agregar" type="success" :icon="icons.Plus"
+                            @done="getStatuses({}, token)"></Modal-Form>
                     </div>
                     <table class="w-full border border-gray-500 border-separate border-t-0 border-b-0 p-2">
                         <thead>
@@ -23,7 +24,8 @@
                                 <td class="border border-gray-500 rounded-lg flex flex-col pe-3 pt-1 pb-1">
                                     <el-button type="primary" :icon="icons.View" plain class="ms-3" />
                                     <Modal-Form type="warning" title="Editar" :icon="icons.Edit" :id="status.id"
-                                        :statuse="status" :mode="isEditMode ? 'edit' : 'create'" @done="test"></Modal-Form>
+                                        :statuse="status" :mode="isEditMode ? 'edit' : 'create'"
+                                        @done="getStatuses({}, token)"></Modal-Form>
                                     <el-button type="danger" :icon="icons.Delete" @click="deleteStatuses(status.id)" plain
                                         class="ms-3" />
                                 </td>
@@ -32,7 +34,7 @@
                     </table>
                     <el-pagination
                         class="flex justify-end rounded-tl-none rounded-tr-none rounded-bl-xl rounded-br-xl border-t-0 border border-gray-500 p-4"
-                        background @current-change="changePage" small :total="filterParams.total" />
+                        background @current-change="changePage()" small :total="filterParams.total" />
                 </div>
             </div>
         </div>
@@ -63,11 +65,14 @@ const filterParams = ({
     pages: "",
 })
 
-const loading = ref(true)
+const loading = ref(false);
+const loadingMessage = ref('');
 const isEditMode = ref(true);
 
 const getStatuses = async (params, token) => {
     try {
+        loading.value = true;
+        loadingMessage.value = 'Cargando datos...';
         const response = await getData(params, token);
         statuses.value = response.data.data;
         filterParams.total = response.data.total;
@@ -86,6 +91,7 @@ const deleteStatuses = async (id) => {
         );
         if (confirmed) {
             loading.value = true;
+            loadingMessage.value = 'Actualizando datos...';
             await deleteData(id, token);
             getStatuses({}, token);
             showMessage("success", "Eliminado con éxito");
@@ -100,12 +106,8 @@ const deleteStatuses = async (id) => {
     }
 };
 
-const test = () => {
-    console.log('ejcutado con exito, aqui no es el error crack');
-};
-
 const changePage = (value) => {
-    getStatuses({ page: value });
+    getStatuses({ page: value }, token);
 };
 
 onMounted(() => {

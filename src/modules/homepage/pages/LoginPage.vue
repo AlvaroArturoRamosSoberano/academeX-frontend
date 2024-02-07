@@ -1,5 +1,5 @@
 <template>
-    <section class="h-screen bg-slate-300 flex justify-center items-center">
+    <section class="h-screen bg-white flex justify-center items-center">
         <div v-loading="loading" element-loading-text="Iniciando sesión..."
             class="card h-96 w-80 bg-gray-100 rounded-xl shadow-2xl flex flex-col justify-center font-jakarta">
             <div class="card-header flex justify-center">
