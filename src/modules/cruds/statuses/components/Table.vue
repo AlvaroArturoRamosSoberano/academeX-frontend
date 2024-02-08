@@ -1,8 +1,8 @@
 <template>
-    <section class="h-auto bg-white flex justify-center items-center">
+    <section class="h-screen bg-white flex justify-center items-center">
         <div class="w-screen">
             <div v-loading="loading" :element-loading-text="loadingMessage"
-                class="card h-screen flex flex-col justify-center items-center mt-20">
+                class="card flex flex-col justify-center items-center mt-20">
                 <div class="card-bg w-80 lg:w-1/2 h-auto bg-white p-4 rounded-xl shadow-xl">
                     <div class="card-header bg-water-300 border border-gray-500 flex justify-between items-center p-2">
                         <h1 class="font-bold text-lg ps-2">Listado de Estados</h1>
