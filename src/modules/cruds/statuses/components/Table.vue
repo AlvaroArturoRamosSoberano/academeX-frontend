@@ -2,7 +2,7 @@
     <section class="h-auto bg-white flex justify-center items-center">
         <div class="w-screen">
             <div v-loading="loading" :element-loading-text="loadingMessage"
-                class="card h-screen flex flex-col justify-center items-center pt-10">
+                class="card h-screen flex flex-col justify-center items-center mt-20">
                 <div class="card-bg w-80 lg:w-1/2 h-auto bg-white p-4 rounded-xl shadow-xl">
                     <div class="card-header bg-water-300 border border-gray-500 flex justify-between items-center p-2">
                         <h1 class="font-bold text-lg ps-2">Listado de Estados</h1>
@@ -20,7 +20,8 @@
                         <tbody v-for="(status, index) in statuses" :key="status.id">
                             <tr class="text-center">
                                 <td class="border border-gray-500 rounded-lg">{{ index + 1 }}</td>
-                                <td class="border border-gray-500 rounded-lg">{{ status.name }}</td>
+                                <td class="border border-gray-500 rounded-lg">{{ status.name ? status.name : "Sin registro"
+                                }}</td>
                                 <td class="border border-gray-500 rounded-lg flex flex-col pe-3 pt-1 pb-1">
                                     <el-button type="primary" :icon="icons.View" plain class="ms-3" />
                                     <Modal-Form type="warning" title="Editar" :icon="icons.Edit" :id="status.id"
@@ -52,24 +53,21 @@ import {
 } from "@/modules/cruds/shared/functions/Notifications.js";
 const statuses = ref([]);
 const token = localStorage.getItem("token");
-
 const icons = markRaw({
     Edit: Edit,
     Plus: Plus,
     Delete: Delete,
     View: View,
 });
-
 const filterParams = ({
     total: "",
     pages: "",
-})
-
+});
 const loading = ref(false);
 const loadingMessage = ref('');
 const isEditMode = ref(true);
 
-const getStatuses = async (params, token) => {
+const getStatuses = async (params) => {
     try {
         loading.value = true;
         loadingMessage.value = 'Cargando datos...';
@@ -103,6 +101,8 @@ const deleteStatuses = async (id) => {
             "error",
             "Error al eliminar registro. Por favor, inténtalo de nuevo."
         );
+    } finally {
+        loading.value = false;
     }
 };
 
